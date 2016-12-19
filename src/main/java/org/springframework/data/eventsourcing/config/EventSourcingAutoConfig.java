@@ -7,6 +7,6 @@ import org.springframework.data.eventsourcing.event.store.CouchbaseEventStore;
 
 @Configuration
 @EnableCouchbaseRepositories(basePackageClasses = CouchbaseEventStore.class)
-@ComponentScan(basePackageClasses = CouchbaseEventStore.class)
+@ComponentScan(basePackageClasses = {CouchbaseEventStore.class, ApplicationContextSingleton.class})
 public class EventSourcingAutoConfig {
 }
