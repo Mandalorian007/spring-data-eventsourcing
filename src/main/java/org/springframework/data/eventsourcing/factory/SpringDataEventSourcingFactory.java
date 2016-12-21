@@ -13,14 +13,11 @@ public class SpringDataEventSourcingFactory {
     private AggregateUpdater aggregateUpdater;
     @Setter
     private EventValidationHandler eventValidationHandler;
-    private CouchbaseEventStore couchbaseEventStore;
-
-    public SpringDataEventSourcingFactory() {
-        ApplicationContext context = ApplicationContextSingleton.getApplicationContext();
-        couchbaseEventStore = context.getBean(CouchbaseEventStore.class);
-    }
 
     public EventSourcingTemplate build() {
+        ApplicationContext context = ApplicationContextSingleton.getApplicationContext();
+        CouchbaseEventStore couchbaseEventStore = context.getBean(CouchbaseEventStore.class);
+
         //TODO handle nulls and defaults
         return new EventSourcingTemplate(couchbaseEventStore, eventValidationHandler, aggregateUpdater);
     }
