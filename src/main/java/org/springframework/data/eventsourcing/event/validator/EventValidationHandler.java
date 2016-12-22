@@ -24,7 +24,7 @@ public class EventValidationHandler {
                 }
             }
         }
-        throw new NoSuchMethodError();
+        throw new NoSuchMethodError("Unable to locate event validator method for event type: " + event.getClass().getSimpleName() + ".  Please confirm method is annotated with @" + EventValidator.class.getSimpleName());
     }
 
     private static List<Method> getMethodsAnnotatedWithAggarateEventHandler(final Class<?> type) {

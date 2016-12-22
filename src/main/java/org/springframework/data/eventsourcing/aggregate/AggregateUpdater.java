@@ -24,6 +24,7 @@ public abstract class AggregateUpdater {
                 }
             }
         }
+        throw new NoSuchMethodError("Unable to locate aggregate updater method for event type: " + event.getClass().getSimpleName() + ".  Please confirm method is annotated with @" + AggregateEventHandler.class.getSimpleName());
     }
 
     private static List<Method> getMethodsAnnotatedWithAggarateEventHandler(final Class<?> type) {
