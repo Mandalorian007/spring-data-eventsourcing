@@ -28,11 +28,15 @@ public class EventSourcingTemplate implements InitializingBean {
         eventStoreRepository = applicationContext.getBean(CouchbaseEventStore.class);
     }
 
-    public <T extends DomainEvent> void handle(T event) throws Exception {
-        boolean isValid = eventValidationHandler.validateEvent(event);
-        if (isValid) {
-            eventStoreRepository.save(new CouchbaseDomainEventWrapper(event));
-            aggregateUpdater.invokeAggregateUpdate(event);
+    public <T extends DomainEvent> void handle(T event) throws RuntimeException {
+        try {
+            boolean isValid = eventValidationHandler.validateEvent(event);
+            if (isValid) {
+                eventStoreRepository.save(new CouchbaseDomainEventWrapper(event));
+                aggregateUpdater.invokeAggregateUpdate(event);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
